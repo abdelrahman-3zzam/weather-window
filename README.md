@@ -48,7 +48,7 @@ There are two kinds of tests. Both use fixtures: Open-Meteo is never called, so 
 | Unit tests | `tests/core.test.js` | 32 separate `node:test` test cases (they contain 171 `assert` calls in total) | 32 / 32 passed |
 | Browser smoke test | `tests/browser.mjs` | 67 named checks inside one Playwright script that drives the real page in Chromium | 67 / 67 passed, 0 console errors or warnings |
 
-The results above are from a run on 2026-11-06 in a Linux environment (Node 22). The suites have not been run on Windows yet.
+The results above are from runs on 2026-11-06: both suites on Linux (Node 22), and the unit suite again on Windows (Node 24), where all 32 also passed.
 
 **Unit tests.** Need Node.js 20 or newer. No packages to install.
 
