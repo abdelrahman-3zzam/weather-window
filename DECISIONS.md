@@ -5,7 +5,7 @@ Short records of consequential choices. Newest last.
 ## D1 · Static web app beside the Python app, not a replacement (2026-10-30)
 **Found:** the latest working version was a Python/NiceGUI app (`weather_window_app.py`). The self-contained HTML version described in the brief was not in the project folders.
 **Options:** (a) keep extending NiceGUI; (b) React + TypeScript + Vite; (c) vanilla ES modules, no build.
-**Chosen:** (c). NiceGUI needs a running Python server per visitor, so it cannot be published on free static hosting, and its component model limits the custom visual work. React/TS would add a toolchain the team does not otherwise need for ~3k lines of UI. Plain modules give a static, zero-dependency site that any host can serve and that `python serve.py` runs locally.
+**Chosen:** (c). NiceGUI needs a running Python server per visitor, so it cannot be published on free static hosting, and its component model limits the custom visual work. React/TS would add a toolchain the project does not otherwise need for ~3k lines of UI. Plain modules give a static, zero-dependency site that any host can serve and that `python serve.py` runs locally.
 **Kept:** the Python app is untouched; it remains the Structured Programming course deliverable. Its rules (same-hour matching, validation bounds, uniform shift, the 24/25/… vs 19/31/… "average trap" weeks) were carried over and are now unit-tested in JS.
 
 ## D2 · Unix timestamps + IANA timezone for all time logic

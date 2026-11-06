@@ -8,7 +8,7 @@ Weather Window turns a seven-day forecast into something you can understand, pla
 
 ![Weather Window overview: the lens, the day dial and the forecast reading](docs/screenshots/overview-real.png)
 
-**Status:** working static web app, version 3.1.0. Automated tests pass using fixture data (recorded-shape sample responses, not live network calls). It has not yet been checked against the live Open-Meteo API, and it is not deployed yet. See [Tests](#tests) and [Known limitations](#known-limitations).
+**Status:** working static web app, version 3.1.0. Automated tests pass using fixture data (recorded-shape sample responses, not live network calls). A manual live API test on Windows on November 6, 2026 succeeded: the app made real city-search and forecast requests to Open-Meteo, both returned HTTP 200, and it displayed a real forecast marked LIVE. It is not deployed yet. See [Tests](#tests) and [Known limitations](#known-limitations).
 
 ## What it does
 
@@ -157,7 +157,7 @@ I used Claude, an AI model made by Anthropic, as a coding assistant. Claude gene
 ## Known limitations
 
 * Open-Meteo's own daily aggregates use the timezone offset in force when the request was made, so on a daylight-saving changeover day a daily max/min can be off by one hour's data. Hourly data and all of Weather Window's own grouping are DST-correct.
-* All automated tests use fixtures shaped like Open-Meteo's documented responses. The app has not yet been checked against the live API; that check is the next step.
+* The automated unit and browser tests use fixtures shaped like Open-Meteo's documented responses and do not call Open-Meteo. A separate manual live API smoke test succeeded on Windows on November 6, 2026. Broader testing across conditions and verification after deployment are still outstanding.
 * The lens is an illustration of a few model values for one hour, not imagery, radar or a simulation; its strata and column are a visual language, not air layers. Humidity is deliberately not encoded.
 * The 3D lens needs WebGL; without it (or if the GPU context is lost) a labelled 2D illustration is shown. Performance was tuned on a software renderer; real-device frame rates are untested.
 * Thermal relief colours between forecast rows are a blend; the living wind, portraits and lens are artistic renderings of forecast values with their mappings stated on screen. None of them is a map or a measurement.
