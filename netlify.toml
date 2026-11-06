@@ -1,0 +1,5 @@
+# Netlify: no build step. The site is the repository root.
+# Security headers come from the _headers file (Netlify and Cloudflare Pages both read it).
+[build]
+  publish = "."
+  command = ""

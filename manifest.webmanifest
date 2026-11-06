@@ -1,0 +1,13 @@
+{
+  "name": "Weather Window",
+  "short_name": "Weather Window",
+  "description": "A week beyond the average: look through the lens at any hour of the forecast.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0a1113",
+  "theme_color": "#0a1113",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

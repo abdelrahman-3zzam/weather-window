@@ -1,0 +1,13 @@
+{
+  "name": "weather-window",
+  "version": "3.1.0",
+  "private": true,
+  "description": "A week beyond the average: look through a data-driven 3D lens at any forecast hour, find the hours that suit you, and see what an average hides.",
+  "type": "module",
+  "scripts": {
+    "start": "python serve.py",
+    "test": "node --test tests/core.test.js",
+    "test:browser": "node tests/browser.mjs http://127.0.0.1:8765/"
+  },
+  "engines": { "node": ">=20" }
+}

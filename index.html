@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://api.open-meteo.com https://geocoding-api.open-meteo.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Weather Window · A week beyond the average</title>
+  <meta name="description" content="Weather Window turns a seven-day forecast into something you can understand, plan around, and experiment with. Does the average tell the whole story?">
+  <meta name="theme-color" content="#0a1113" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ece8de" media="(prefers-color-scheme: light)">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Weather Window · A week beyond the average">
+  <meta property="og:description" content="Understand the coming week, find the hours that fit your plans, and see why an average can hide the whole story.">
+  <meta property="og:image" content="assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/martian-mono-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="src/styles/app.css">
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Weather Window, overview">
+      <span class="brand-slot"></span>
+      <span class="brand-text"><span class="wordmark">Weather <i>Window</i></span><span class="tagline">A week beyond the average</span></span>
+    </a>
+
+    <div class="place-control">
+      <button type="button" class="place-btn" id="place-btn" aria-expanded="false" aria-controls="place-panel">
+        <span class="place-btn-icon"></span>
+        <span class="place-btn-text"><span class="place-btn-label">Location</span><span class="place-btn-name" id="place-name">Demo week</span></span>
+      </button>
+      <div class="place-panel" id="place-panel" hidden>
+        <div class="search-row">
+          <label for="search" class="sr-only">Search for a city</label>
+          <input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="Search a city: Tanta, Lisbon, Osaka…" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" maxlength="80">
+          <button type="button" class="btn ghost icon-only" id="search-close" aria-label="Close location panel"></button>
+        </div>
+        <p class="search-status small muted" id="search-status" aria-live="polite"></p>
+        <ul class="search-results" id="search-results" role="listbox" aria-label="Matching places"></ul>
+        <div class="place-actions">
+          <button type="button" class="btn" id="geo-btn"></button>
+          <button type="button" class="btn ghost" id="demo-btn">Explore the demo week</button>
+        </div>
+        <p class="small muted geo-note">Your location is only requested when you press the button. It is rounded to about 1 km and sent to Open-Meteo to fetch the forecast, nowhere else.</p>
+        <section class="saved" aria-labelledby="saved-h">
+          <h2 id="saved-h" class="mini-h">Saved places</h2>
+          <ul class="saved-list" id="saved-list"></ul>
+        </section>
+      </div>
+    </div>
+
+    <div class="status" id="status" role="status"></div>
+
+    <div class="actions">
+      <button type="button" class="btn ghost icon-only" id="refresh-btn" aria-label="Refresh forecast"></button>
+      <button type="button" class="btn ghost icon-only" id="save-btn" aria-label="Save this place" aria-pressed="false"></button>
+      <button type="button" class="btn ghost icon-only" id="sound-btn" aria-pressed="false" aria-label="Sound off. Turn on the ambient sound layer"></button>
+      <button type="button" class="btn ghost" id="units-btn" aria-label="Switch units"></button>
+      <button type="button" class="btn ghost icon-only" id="theme-btn" aria-label="Switch theme"></button>
+      <button type="button" class="btn ghost icon-only" id="menu-btn" aria-label="More: export and privacy" aria-expanded="false" aria-controls="menu"></button>
+      <div class="menu" id="menu" hidden>
+        <button type="button" id="export-btn"></button>
+        <button type="button" id="present-btn"></button>
+        <button type="button" id="privacy-btn"></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sections" aria-label="Sections">
+    <a href="#overview" data-view="overview"><span class="num">01</span> Overview</a>
+    <a href="#planner" data-view="planner"><span class="num">02</span> Find your window</a>
+    <a href="#lab" data-view="lab"><span class="num">03</span> What-if lab</a>
+  </nav>
+
+  <div class="banner" id="banner" hidden></div>
+
+  <main id="main" tabindex="-1">
+    <section class="intro" id="intro" hidden aria-labelledby="intro-h"></section>
+    <section class="view" id="view-overview" data-view="overview" aria-label="Overview"></section>
+    <section class="view" id="view-planner" data-view="planner" aria-label="Find your window" hidden></section>
+    <section class="view" id="view-lab" data-view="lab" aria-label="What-if lab" hidden></section>
+    <noscript><p class="panel">Weather Window needs JavaScript to fetch and chart the forecast.</p></noscript>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand"><span class="brand-row"><span class="footer-mark"></span><span class="wordmark">Weather <i>Window</i></span></span><p>The circle is the average. The lines are the week. The forecast tells you what might happen; Weather Window helps you understand what the week could feel like.</p></div>
+    <div class="footer-cols">
+      <p><strong>Data.</strong> Forecast and geocoding by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Current conditions are model estimates, not station observations. Free API for non-commercial use. The lens is an illustration of these values, not a simulation.</p>
+      <p><strong>UV.</strong> Categories and advice follow the <a href="https://www.who.int/news-room/questions-and-answers/item/radiation-the-ultraviolet-(uv)-index" target="_blank" rel="noopener noreferrer">WHO UV index guidance</a>.</p>
+      <p><strong>Privacy.</strong> No accounts, no analytics, no cookies. Settings and saved places stay in this browser. City searches and coordinates (rounded to ~1 km) go to Open-Meteo only.</p>
+    </div>
+  </footer>
+
+  <dialog class="dialog" id="privacy-dialog" aria-labelledby="privacy-h">
+    <form method="dialog">
+      <h2 id="privacy-h">Your data in Weather Window</h2>
+      <ul>
+        <li><strong>Stored in this browser only:</strong> units, theme, your planner conditions, saved places, the last place you viewed, and up to four recent forecasts so the page can open instantly.</li>
+        <li><strong>Sent to Open-Meteo:</strong> the text you search for, and the coordinates of the place you view (rounded to 0.01°, about 1 km).</li>
+        <li><strong>Never collected:</strong> accounts, analytics, cookies, or tracking. Nothing is synced between devices.</li>
+      </ul>
+      <p class="small muted" id="storage-state"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn danger" id="clear-btn">Clear everything saved</button>
+        <button class="btn" value="close">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <p class="sr-only" id="sr-live" aria-live="polite"></p>
+</body>
+</html>
