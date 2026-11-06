@@ -8,7 +8,7 @@ Weather Window turns a seven-day forecast into something you can understand, pla
 
 ![Weather Window overview: the lens, the day dial and the forecast reading](docs/screenshots/overview-real.png)
 
-**Status:** working static web app, version 3.1.0. Automated tests pass using fixture data (recorded-shape sample responses, not live network calls). A manual live API test on Windows on November 6, 2026 succeeded: the app made real city-search and forecast requests to Open-Meteo, both returned HTTP 200, and it displayed a real forecast marked LIVE. It is not deployed yet. See [Tests](#tests) and [Known limitations](#known-limitations).
+**Status:** working static web app, version 3.1.0. Automated tests pass using fixture data (synthetic sample responses shaped like Open-Meteo's, not live network calls). A manual live API test on Windows on November 6, 2026 succeeded: the app made real city-search and forecast requests to Open-Meteo, both returned HTTP 200, and it displayed a real forecast marked LIVE. It is not deployed yet. See [Tests](#tests) and [Known limitations](#known-limitations).
 
 ## What it does
 
